@@ -4,9 +4,13 @@ import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import { useDispatch, useSelector } from 'react-redux';
 import { uniqueId } from 'lodash';
-import { setDisabled, setMessages, setPenaltyMessages } from '../slices/data';
+import {
+  setDisabled, setMessages, setPenaltyMessages,
+} from '../slices/data';
 import messageMaker from '../utils/messageMaker';
 import penaltyMessageMaker from '../utils/penaltyMessageMaker';
+import setActions from '../utils/setActions';
+import setPenaltyActions from '../utils/setPenaltyAction';
 
 const MainContainer = () => {
   const { width, height } = useWindowSize();
@@ -21,22 +25,25 @@ const MainContainer = () => {
   const dispatch = useDispatch();
   const texts = messageMaker(2);
   const penaltyTexts = penaltyMessageMaker(10);
+
   const handleStart = () => {
     dispatch(setDisabled(true));
     texts.forEach((text) => {
-      setTimeout(() => {
-        dispatch(setMessages(text.text));
+      setTimeout(async () => {
+        await dispatch(setMessages(text.text));
+        await dispatch(setActions(text.text.text));
       }, text.time);
     });
   };
   const handlePenaltyStart = () => {
     dispatch(setDisabled(true));
     penaltyTexts.forEach((text) => {
-      setTimeout(() => {
-        dispatch(setPenaltyMessages({
+      setTimeout(async () => {
+        await dispatch(setPenaltyMessages({
           penaltyMessage: text.text,
           position: text.position,
         }));
+        await dispatch(setPenaltyActions(text.text));
       }, text.time);
     });
   };

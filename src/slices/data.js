@@ -26,13 +26,13 @@ const dataSlice = createSlice({
     setDisabled: (state, { payload: isDisabled }) => {
       state.isDisabled = isDisabled;
     },
+    setRealGoals: (state) => {
+      state.goals.real += 1;
+    },
+    setBarsaGoals: (state) => {
+      state.goals.barsa += 1;
+    },
     setMessages: (state, { payload: message }) => {
-      if (message.text === 'Реал забивает гол') {
-        state.goals.real += 1;
-      }
-      if (message.text === 'Барселона забивает гол') {
-        state.goals.barsa += 1;
-      }
       if (message.text === 'Матч завершен' && (state.goals.real === state.goals.barsa)) {
         state.isDraw = true;
         state.isDisabled = false;
@@ -47,25 +47,25 @@ const dataSlice = createSlice({
         position: message.position,
       });
     },
+    setPenaltyRealGoals: (state, { payload: color }) => {
+      state.penaltyGoals.realGoals += 1;
+      state.penaltyGoals.real.push(color);
+    },
+    setPenaltyBarsaGoals: (state, { payload: color }) => {
+      state.penaltyGoals.barsaGoals += 1;
+      state.penaltyGoals.barsa.push(color);
+    },
+    setPenaltyRealNoGoals: (state, { payload: color }) => {
+      state.penaltyGoals.real.push(color);
+    },
+    setPenaltyBarsaNoGoals: (state, { payload: color }) => {
+      state.penaltyGoals.barsa.push(color);
+    },
     setPenaltyMessages: (state, { payload: { penaltyMessage, position } }) => {
-      if (penaltyMessage.text === 'Реал забивает гол') {
-        state.penaltyGoals.realGoals += 1;
-        state.penaltyGoals.real.push(penaltyMessage.color);
-      }
-      if (penaltyMessage.text === 'Реал не забивает гол') {
-        state.penaltyGoals.real.push(penaltyMessage.color);
-      }
-      if (penaltyMessage.text === 'Барселона забивает гол') {
-        state.penaltyGoals.barsaGoals += 1;
-        state.penaltyGoals.barsa.push(penaltyMessage.color);
-      }
-      if (penaltyMessage.text === 'Барселона не забивает гол') {
-        state.penaltyGoals.barsa.push(penaltyMessage.color);
-      }
       if (penaltyMessage.text === 'Серия пенальти завершена' && (state.penaltyGoals.realGoals === state.penaltyGoals.barsaGoals)) {
         state.isDrawPenalty = true;
       }
-      if (penaltyMessage === 'Серия пенальти завершена' && (state.penaltyGoals.realGoals !== state.penaltyGoals.barsaGoals)) {
+      if (penaltyMessage.text === 'Серия пенальти завершена' && (state.penaltyGoals.realGoals !== state.penaltyGoals.barsaGoals)) {
         state.isEnd = true;
       }
       state.messages.push({
@@ -78,6 +78,14 @@ const dataSlice = createSlice({
 });
 
 export const {
-  setMessages, setDisabled, setPenaltyMessages,
+  setMessages,
+  setDisabled,
+  setPenaltyMessages,
+  setRealGoals,
+  setBarsaGoals,
+  setPenaltyRealGoals,
+  setPenaltyBarsaGoals,
+  setPenaltyRealNoGoals,
+  setPenaltyBarsaNoGoals,
 } = dataSlice.actions;
 export default dataSlice.reducer;

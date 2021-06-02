@@ -1,4 +1,4 @@
 # React boilerplate
 - webpack
-- redux
+- redux-toolkit
 - lodash
