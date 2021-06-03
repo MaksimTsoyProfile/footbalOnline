@@ -23,28 +23,28 @@ const MainContainer = () => {
   const isDraw = useSelector((state) => state.data.isDraw);
   const isDisabled = useSelector((state) => state.data.isDisabled);
   const dispatch = useDispatch();
-  const texts = messageMaker(2);
-  const penaltyTexts = penaltyMessageMaker(10);
+  const footballMessages = messageMaker(2);
+  const footballPenaltyMessages = penaltyMessageMaker(10);
 
   const handleStart = () => {
     dispatch(setDisabled(true));
-    texts.forEach((text) => {
+    footballMessages.forEach((footballMessage) => {
       setTimeout(async () => {
-        await dispatch(setMessages(text.text));
-        await dispatch(setActions(text.text.text));
-      }, text.time);
+        await dispatch(setMessages(footballMessage.mess));
+        await dispatch(setActions(footballMessage.mess.text));
+      }, footballMessage.time);
     });
   };
   const handlePenaltyStart = () => {
     dispatch(setDisabled(true));
-    penaltyTexts.forEach((text) => {
+    footballPenaltyMessages.forEach((footballPenaltyMessage) => {
       setTimeout(async () => {
         await dispatch(setPenaltyMessages({
-          penaltyMessage: text.text,
-          position: text.position,
+          penaltyMessage: footballPenaltyMessage.mess,
+          position: footballPenaltyMessage.position,
         }));
-        await dispatch(setPenaltyActions(text.text));
-      }, text.time);
+        await dispatch(setPenaltyActions(footballPenaltyMessage.mess));
+      }, footballPenaltyMessage.time);
     });
   };
   return (

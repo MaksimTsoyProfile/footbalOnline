@@ -2,14 +2,14 @@ import randomPenaltyMessageMaker from './randomPenaltyMessageMaker';
 
 const penaltyMessageMaker = (num) => {
   const messages = [{
-    text: { text: 'Начинается серия пенальти', color: '' },
+    mess: { text: 'Начинается серия пенальти', color: '' },
     time: 1000,
     position: 'center',
   }];
   const iter = (n, t) => {
     if (n === 0) {
       messages.push({
-        text: { text: 'Серия пенальти завершена', color: '' },
+        mess: { text: 'Серия пенальти завершена', color: '' },
         time: t,
         position: 'center',
       });
@@ -17,13 +17,13 @@ const penaltyMessageMaker = (num) => {
     }
     if (n % 2) {
       messages.push({
-        text: randomPenaltyMessageMaker('Барселона'),
+        mess: randomPenaltyMessageMaker('Барселона'),
         time: t,
         position: 'right',
       });
     } else {
       messages.push({
-        text: randomPenaltyMessageMaker('Реал'),
+        mess: randomPenaltyMessageMaker('Реал'),
         time: t,
         position: 'left',
       });
