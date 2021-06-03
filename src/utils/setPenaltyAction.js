@@ -1,9 +1,9 @@
 import { find } from 'lodash';
 import {
-  setPenaltyRealGoals, setPenaltyBarsaGoals, setPenaltyBarsaNoGoals, setPenaltyRealNoGoals,
+  setPenaltyRealGoals, setPenaltyBarsaGoals, setPenaltyBarsaNoGoals, setPenaltyRealNoGoals, setIsDrawPenalty,
 } from '../slices/data';
 
-const setPenaltyActions = (obj) => {
+const setPenaltyActions = (obj, goals) => {
   const data = [
     {
       message: 'Реал забивает гол',
@@ -20,6 +20,10 @@ const setPenaltyActions = (obj) => {
     {
       message: 'Барселона не забивает гол',
       action: setPenaltyBarsaNoGoals(obj.color),
+    },
+    {
+      message: 'Серия пенальти завершена',
+      action: setIsDrawPenalty(),
     },
   ];
   if (find(data, ['message', obj.text])) {

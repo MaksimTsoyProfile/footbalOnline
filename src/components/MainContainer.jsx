@@ -15,15 +15,14 @@ import setPenaltyActions from '../utils/setPenaltyAction';
 const MainContainer = () => {
   const { width, height } = useWindowSize();
   const goals = useSelector((state) => state.data.goals);
-  const penaltyRealGoals = useSelector((state) => state.data.penaltyGoals.realGoals);
-  const penaltyBarsaGoals = useSelector((state) => state.data.penaltyGoals.barsaGoals);
+  const penaltyGoals = useSelector((state) => state.data.penaltyGoals);
   const penaltyReal = useSelector((state) => state.data.penaltyGoals.real);
   const penaltyBarsa = useSelector((state) => state.data.penaltyGoals.barsa);
   const isEnd = useSelector((state) => state.data.isEnd);
   const isDraw = useSelector((state) => state.data.isDraw);
   const isDisabled = useSelector((state) => state.data.isDisabled);
   const dispatch = useDispatch();
-  const footballMessages = messageMaker(2);
+  const footballMessages = messageMaker(10);
   const footballPenaltyMessages = penaltyMessageMaker(10);
 
   const handleStart = () => {
@@ -86,7 +85,7 @@ const MainContainer = () => {
           </Grid>
           {isDraw ? (
             <Grid item xs={12} style={{ textAlign: 'center', fontSize: '30px' }}>
-              {`(${penaltyRealGoals} : ${penaltyBarsaGoals})`}
+              {`(${penaltyGoals.realGoals} : ${penaltyGoals.barsaGoals})`}
             </Grid>
           ) : null}
           <div className='button-container'>

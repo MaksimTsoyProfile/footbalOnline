@@ -32,15 +32,16 @@ const dataSlice = createSlice({
     setBarsaGoals: (state) => {
       state.goals.barsa += 1;
     },
-    setMessages: (state, { payload: message }) => {
-      if (message.text === 'Матч завершен' && (state.goals.real === state.goals.barsa)) {
+    setIsDraw: (state) => {
+      if (state.goals.real === state.goals.barsa) {
         state.isDraw = true;
         state.isDisabled = false;
-      }
-      if (message.text === 'Матч завершен' && (state.goals.real !== state.goals.barsa)) {
+      } else {
         state.isEnd = true;
         state.isDisabled = true;
       }
+    },
+    setMessages: (state, { payload: message }) => {
       state.messages.push({
         message: message.text,
         id: uniqueId(),
@@ -61,13 +62,14 @@ const dataSlice = createSlice({
     setPenaltyBarsaNoGoals: (state, { payload: color }) => {
       state.penaltyGoals.barsa.push(color);
     },
-    setPenaltyMessages: (state, { payload: { penaltyMessage, position } }) => {
-      if (penaltyMessage.text === 'Серия пенальти завершена' && (state.penaltyGoals.realGoals === state.penaltyGoals.barsaGoals)) {
+    setIsDrawPenalty: (state) => {
+      if (state.penaltyGoals.realGoals === state.penaltyGoals.barsaGoals) {
         state.isDrawPenalty = true;
-      }
-      if (penaltyMessage.text === 'Серия пенальти завершена' && (state.penaltyGoals.realGoals !== state.penaltyGoals.barsaGoals)) {
+      } else {
         state.isEnd = true;
       }
+    },
+    setPenaltyMessages: (state, { payload: { penaltyMessage, position } }) => {
       state.messages.push({
         message: penaltyMessage.text,
         id: uniqueId(),
@@ -87,5 +89,7 @@ export const {
   setPenaltyBarsaGoals,
   setPenaltyRealNoGoals,
   setPenaltyBarsaNoGoals,
+  setIsDraw,
+  setIsDrawPenalty,
 } = dataSlice.actions;
 export default dataSlice.reducer;

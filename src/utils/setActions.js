@@ -1,5 +1,7 @@
 import { find } from 'lodash';
-import { setRealGoals, setBarsaGoals } from '../slices/data';
+import {
+  setRealGoals, setBarsaGoals, setIsDraw,
+} from '../slices/data';
 
 const setActions = (message) => {
   const data = [
@@ -10,6 +12,10 @@ const setActions = (message) => {
     {
       message: 'Барселона забивает гол',
       action: setBarsaGoals(),
+    },
+    {
+      message: 'Матч завершен',
+      action: setIsDraw(),
     },
   ];
   if (find(data, ['message', message])) {
