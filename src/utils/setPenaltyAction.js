@@ -3,7 +3,7 @@ import {
   setPenaltyRealGoals, setPenaltyBarsaGoals, setPenaltyBarsaNoGoals, setPenaltyRealNoGoals, setIsDrawPenalty,
 } from '../slices/data';
 
-const setPenaltyActions = (obj, goals) => {
+const setPenaltyActions = (obj) => {
   const data = [
     {
       message: 'Реал забивает гол',
